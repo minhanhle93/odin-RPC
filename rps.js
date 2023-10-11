@@ -1,7 +1,6 @@
 const choice = ["rock", "paper", "scissors"];
 const choicesString = choice.join(", ");
 
-
 function getComputerChoice() {
     return choice[Math.floor(Math.random() * choice.length)];
 }
