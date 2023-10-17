@@ -1,12 +1,16 @@
 const choice = ["rock", "paper", "scissors"];
-const choicesString = choice.join(", ");
+
+let playerScore = 0;
+let computerScore = 0;
+
+const resultDisplay = document.getElementById("result");
+const scoreDisplay = document.getElementById("score");
 
 function getComputerChoice() {
     return choice[Math.floor(Math.random() * choice.length)];
 }
 
-function playRound() {
-    const playerSelection = prompt("Enter your choice ("+choicesString+")", "").toLowerCase();;
+function playRound(playerSelection) {
     const computerSelection = getComputerChoice();
 
     let log = "";
@@ -38,32 +42,16 @@ function playRound() {
     } else {
         log = "Invalid input. Try again";
     }
-    console.log(log)
-    return log;
+    resultDisplay.textContent = log;
+
+    if (log.includes("You Win!")) {
+        playerScore += 1;
+    } else if (log.includes("You Lose!")) {
+        computerScore += 1;
+    }
+    scoreDisplay.textContent = `Player: ${playerScore} - Computer: ${computerScore}`;
 }
 
-function game() {
-    let totalRounds = 5;
-    let playerScore = 0;
-    let computerScore = 0;
-
-    for (let round = 0; round < totalRounds; round++) {
-        let result = playRound(); 
-
-        if (result.includes("You Win!")) {
-            playerScore += 1;
-        } else if (result.includes("You Lose!")) {
-            computerScore += 1;
-        }
-    }
-    let winner = Math.max(playerScore, computerScore);
-    if (winner === playerScore) {
-        alert("You Won the Game");
-    } else if (winner === computerScore) {
-        alert("You Lost the Game");
-    } else {
-        alert("It's a Tie Game");
-    }
-}
-
-game();
+document.getElementById("rock-btn").addEventListener("click", () => playRound("rock"));
+document.getElementById("paper-btn").addEventListener("click", () => playRound("paper"));
+document.getElementById("scissors-btn").addEventListener("click", () => playRound("scissors"));
